@@ -10,8 +10,23 @@ Note: this lambda function will be triggered every other week by AWS Evebridge s
 The lambda function is deployed from a container image that is stored in AWS ECR. For that you will need access to the registry.
 1. Clone the repository
 2. Update code
-3. Create an environment variable for the image registry - export ECR_URL= "<AWSAccountId>.dkr.ecr.us-east-1.amazonaws.com/dsp-configuration"
-3. Build a new image - 'docker build -t dsp-script .'
-4. Tag your new image - 'docker tag dsp-script:latest $ECR_URL:latest'
-5. Log into ECR - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin "<AWSAccountId>.dkr.ecr.us-east-1.amazonaws.com"
-5. Push code to AWS ECR - 'docker push $ECR_URL:latest' 
+3. Create an environment variable for the image registry
+```bash
+export ECR_URL= "<AWSAccountId>.dkr.ecr.us-east-1.amazonaws.com/dsp-configuration"
+```
+3. Build a new image
+```bash
+docker build -t dsp-script .
+```
+4. Tag your new image
+```bash
+ docker tag dsp-script:latest $ECR_URL:latest
+```
+5. Log into ECR
+```bash
+aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin "<AWSAccountId>.dkr.ecr.us-east-1.amazonaws.com"
+```
+5. Push code to AWS ECR
+```bash
+docker push $ECR_URL:latest
+```
