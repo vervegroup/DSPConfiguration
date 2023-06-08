@@ -91,8 +91,6 @@ def fill_table(account,table):
                 table["Official Name"].append(account[key])
             if key=="reporting_email":
                 table["Reporting Email"].append(account[key])
-            if key=="request_timeout":
-                table["Request Timeout"].append(account[key])
             if key=="sales_office":
                 table["Sales Office"].append(account[key])
             if key=="status":
@@ -148,15 +146,14 @@ def lambda_handler(event, context):
     client_id = "DjzEhbdFj7XqNLXrM7H25yOv8lQ7jOjteQOQXkDR"
     client_secret = "5apJBV6VJLyXbDCUQZ4EuJzzGNXFYkgkbPPNQXVCNj1fQZJsDTDjJr9M7p3h8H9UApfqv08hNxvxTck7dY39Y18Y2HNgzyPj7i7zPwmw3A4gkztraes6ZOnkYpIxN7iE"
     data=get_data(client_id, client_secret)
-    table={'id':[],
+    table={"Name":[],'id':[],
      'DemandSupportedTimeout':[],
       'MultiAdFormat':[],'MultiAdSizes':[],"MultipleSeatBidsEnabled":[],"NativeVersion":[],"N2D":[],"D2N":[],"OpenMeasurement":[],
       "ORTBVersion":[],"BidLossNotification":[],"FloorPrice":[],"SupportedMetricObjects":[],"SupportedUserIdSolutions":[],"SupportedMimeTypes":[],"ImpressionMeasurement":[],"iabEUvendorId":[],"kpiReportingEmail":[],
-      "LegalRelationship":[],"LooseDataUseContract":[],"BinaryConsent":[],"GPP":[],"MaxAdResponseize":[],"Name":[],
-      "OfficialName":[],"ReportingEmail":[],"RequestTimeout":[],"SalesOffice":[],"Status":[],"SChain":[]}
+      "LegalRelationship":[],"LooseDataUseContract":[],"BinaryConsent":[],"GPP":[],"MaxAdResponseize":[],
+      "OfficialName":[],"ReportingEmail":[], "SalesOffice":[],"Status":[],"SChain":[]}
     
     for account in data:
         if account["dsp"]!= None:
             fill_table(account,table)
     send_email(table,"musab.mehadi@smaato.com")
-    
