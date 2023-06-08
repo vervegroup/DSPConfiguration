@@ -26,7 +26,7 @@ docker build -t dsp-script .
 ```bash
 aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin "<AWSAccountId>.dkr.ecr.us-east-1.amazonaws.com"
 ```
-5. Push code to AWS ECR
+6. Push code to AWS ECR
 ```bash
 docker push $ECR_URL:latest
 ```
