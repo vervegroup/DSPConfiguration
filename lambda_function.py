@@ -26,7 +26,7 @@ def get_data(id,secret):
     HEADERS = {"Content-Type": "application/json",
             "Authorization": "Bearer " + API_TOKEN}
 
-    r = requests.get('https://sdx-api-test-internal.smaatolabs.net/demand-partners/?expand=endpoints', headers=HEADERS)
+    r = requests.get('https://sdx-api-test.smaatolabs.net/demand-partners/?expand=endpoints', headers=HEADERS)
     response = json.loads(r.content.decode("utf-8"))
     print("successfully fetched data")
     return response
@@ -44,7 +44,7 @@ def send_email(table,recipient):
     # converting dictionary into dataframe
     new= pd.DataFrame(table)
     # Save dataframe to CSV file
-    new.to_csv('/tmp/DSP Configuration.csv', index=False) 
+    new.to_csv('/tmp/DSPConfiguration.csv', index=False) 
     # Email parameters
     sender_email ="no-reply@smaato.com"
     # recipient_email = "musab.mehadi@smaato.com"
@@ -58,7 +58,7 @@ def send_email(table,recipient):
     msg['Subject'] = "DSP Configurations Table" 
     msg.attach(MIMEText(message, 'plain'))
     # Open CSV file in binary mode and add as attachment
-    with open("/tmp/DSP Configuration.csv", "rb") as attachment:
+    with open("/tmp/DSPConfiguration.csv", "rb") as attachment:
         part = MIMEBase("application", "octet-stream")
         part.set_payload(attachment.read())
         encoders.encode_base64(part)
@@ -80,7 +80,7 @@ def send_email(table,recipient):
         print("Email could not be sent to:", sendmail_status) 
     # Terminate SMTP session and delete CSV file
     smtp_session.quit()
-    os.remove("/tmp/DSP.csv")
+    os.remove("/tmp/DSPConfiguration.csv")
     
 
 def lambda_handler(event, context):
@@ -88,7 +88,7 @@ def lambda_handler(event, context):
     client_id = "ChVPFjESF7SMaIXpppT7qXHdxm7e0rALC5EqHHK1"
     client_secret = "JqznrTQ8MbRAldZKqUjl3AstSrhi8L2fmozSZ9r8vCm2u8Lbah66mmKJqRy7b7Jrwbzg8VSE7nH19NiDOf9mnx6xeF9UoHbSTgzGIXv6dt7U8RKl44lxjq25CR1v9J8L"
     data=get_data(client_id, client_secret)
-    table={"Name":[],'id':[],"Status":[]}
+    table={"Name":[],'Id':[],"Status":[]}
     
     for account in data:
         fill_table(account,table)
