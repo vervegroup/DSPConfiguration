@@ -146,7 +146,7 @@ def lambda_handler(event, context):
     client_id = "DjzEhbdFj7XqNLXrM7H25yOv8lQ7jOjteQOQXkDR"
     client_secret = "5apJBV6VJLyXbDCUQZ4EuJzzGNXFYkgkbPPNQXVCNj1fQZJsDTDjJr9M7p3h8H9UApfqv08hNxvxTck7dY39Y18Y2HNgzyPj7i7zPwmw3A4gkztraes6ZOnkYpIxN7iE"
     data=get_data(client_id, client_secret)
-    table={"Name":[],'id':[],
+    table={"Name":[],'Id':[],
      'DemandSupportedTimeout':[],
       'MultiAdFormat':[],'MultiAdSizes':[],"MultipleSeatBidsEnabled":[],"NativeVersion":[],"N2D":[],"D2N":[],"OpenMeasurement":[],
       "ORTBVersion":[],"BidLossNotification":[],"FloorPrice":[],"SupportedMetricObjects":[],"SupportedUserIdSolutions":[],"SupportedMimeTypes":[],"ImpressionMeasurement":[],"iabEUvendorId":[],"kpiReportingEmail":[],
