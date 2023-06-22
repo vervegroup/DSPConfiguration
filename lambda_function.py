@@ -34,8 +34,6 @@ def fill_table(account,table):
      for key in account:
             if key=="id":
                 table["Id"].append(account[key])
-            if key=="demand_supported_maximum_timeout":
-                table["Demand Supported Timeout"].append(account[key])
             if key=="dsp":                   
                     table["Multi Ad Format"].append(account[key]["multi_ad_format"])
                     table["Multi Ad Sizes"].append(account[key]["multi_ad_sizes"])
@@ -45,15 +43,22 @@ def fill_table(account,table):
                     table["D2N"].append(account[key]["display2native_enabled"])
                     table["Open Measurement"].append(account[key]["open_measurement_enabled"])
                     table["ORTB Version"].append(account[key]["open_rtb_version"])
-                    table["Bid Loss Notification"].append(account[key]["send_bidloss_notification"])
                     table["Floor Price"].append(account[key]["send_floor_price"])
                     table["Impression Measurement"].append(account[key]["impression_measurement"])
+                    string=""
+                    for element in account[key]["skanids"]:
+                        if element==account[key]["skanids"][0]:
+                            string= element
+                        else:
+                            string= element +', '+ string   
+                    table["SKAN Ids"].append(string)
+
                     string=""
                     for element in account[key]["supported_metric_objects"]:
                         if element==account[key]["supported_metric_objects"][0]:
                             string= element
                         else:
-                            string= element +','+ string   
+                            string= element +', '+ string   
                     table["Supported Metric Objects"].append(string)
 
                     string=""
@@ -61,7 +66,7 @@ def fill_table(account,table):
                         if element==account[key]["supported_mime_types"][0]:
                             string= element
                         else:
-                            string= element +','+ string   
+                            string= element +', '+ string   
                     table["Supported Mime Types"].append(string)
 
                     string=""
@@ -69,7 +74,7 @@ def fill_table(account,table):
                         if element==account[key]["supported_user_id_solutions"][0]:
                             string= element
                         else:
-                            string= element +','+ string   
+                            string= element +', '+ string   
                     table["Supported User Id Solutions"].append(string)  
             if key=="iab_eu_vendor_id":
                 table["IAB EU Vendor Id"].append(account[key])
@@ -138,7 +143,7 @@ def send_email(table,recipient):
         print("Email could not be sent to:", sendmail_status) 
     # Terminate SMTP session and delete CSV file
     smtp_session.quit()
-    os.remove("/tmp/DSP.csv")
+    os.remove("/tmp/DSP Configuration.csv")
     
 
 def lambda_handler(event, context):
@@ -147,11 +152,10 @@ def lambda_handler(event, context):
     client_secret = "5apJBV6VJLyXbDCUQZ4EuJzzGNXFYkgkbPPNQXVCNj1fQZJsDTDjJr9M7p3h8H9UApfqv08hNxvxTck7dY39Y18Y2HNgzyPj7i7zPwmw3A4gkztraes6ZOnkYpIxN7iE"
     data=get_data(client_id, client_secret)
     table={"Name":[],'Id':[],
-     'DemandSupportedTimeout':[],
-      'MultiAdFormat':[],'MultiAdSizes':[],"MultipleSeatBidsEnabled":[],"NativeVersion":[],"N2D":[],"D2N":[],"OpenMeasurement":[],
-      "ORTBVersion":[],"BidLossNotification":[],"FloorPrice":[],"SupportedMetricObjects":[],"SupportedUserIdSolutions":[],"SupportedMimeTypes":[],"ImpressionMeasurement":[],"iabEUvendorId":[],"kpiReportingEmail":[],
-      "LegalRelationship":[],"LooseDataUseContract":[],"BinaryConsent":[],"GPP":[],"MaxAdResponseize":[],
-      "OfficialName":[],"ReportingEmail":[], "SalesOffice":[],"Status":[],"SChain":[]}
+      'Multi Ad Format':[],'Multi Ad Sizes':[],"Multiple Seat Bids Enabled":[],"Native Version":[],"N2D":[],"D2N":[],"Open Measurement":[],
+      "ORTB Version":[],"Floor Price":[],"Supported Metric Objects":[],"Supported User Id Solutions":[],"Supported Mime Types":[],"Impression Measurement":[],"IAB EU Vendor Id":[],"KPI Reporting Email":[],
+      "Legal Relationship":[],"Loose Data Use Contract":[],"Binary Consent":[],"GPP":[],"Max Ad Response Size":[],
+      "Official Name":[],"Reporting Email":[], "Sales Office":[],"Status":[],"SChain":[],"SKAN Ids":[]}
     
     for account in data:
         if account["dsp"]!= None:
