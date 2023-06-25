@@ -161,3 +161,4 @@ def lambda_handler(event, context):
         if account["dsp"]!= None:
             fill_table(account,table)
     send_email(table,"musab.mehadi@smaato.com")
+    send_email(table,"marketersales-team@smaato.com")
